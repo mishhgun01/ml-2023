@@ -29,12 +29,13 @@ def month_number(date):
 
 # Диаграмма рассеивания
 flg, ax = plt.subplots(figsize=(20, 12))
+
 df['DATE'] = df['EVENT_DATE'].apply(date_to_time_sorted)
 df_sorted = df[df['YEAR']>2021][['FATALITIES', 'DATE']].groupby('DATE').agg({'FATALITIES': ['sum']}).reset_index()
 df_sorted.columns = ['date', 'deaths']
 df_sorted['month'] = df_sorted['date'].apply(month_number)
 df_sorted.sort_values(by=['month'])
-print(df_sorted)
+
 ax.scatter(x=df_sorted['month'], y=df_sorted['deaths'])
 plt.xlabel("Временная метка")
 plt.ylabel("Смерти")
